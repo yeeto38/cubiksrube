@@ -12,13 +12,11 @@ keymapimg = pygame.image.load("keymap.png")
 keymapimg.set_alpha(128)
 # Set the width and height of the screen
 uout = input("Enter the length of the screen in px. Press enter to set to default (1400): ")
-if uout != '':
-    try:
-        leng = int(uout)
-    except ValueError:
-        print("Invalid input. Setting to default.")
-else:
-    leng = 1400
+try:
+    leng = int(uout)
+except ValueError or NameError:
+    print("Invalid input. Setting to default.")
+    leng = 1200
 
 size = (leng, int(leng * 9 / 14))
 
@@ -151,7 +149,13 @@ done = False
 acceptable_inputs = [pygame.K_r, pygame.K_u, pygame.K_f, pygame.K_l, pygame.K_d, pygame.K_b, pygame.K_x, pygame.K_y, pygame.K_z, pygame.K_m, pygame.K_e, pygame.K_s, pygame.K_SPACE, pygame.KSCAN_APOSTROPHE, pygame.K_RSHIFT, pygame.K_LSHIFT, pygame.K_p, pygame.K_BACKSLASH, pygame.K_ESCAPE, pygame.K_2]
 
 #timer variables
-prevsolves = np.zeros(5, dtype=float)
+prevsolves = np.zeros(12, dtype=float)
+# Check if times.csv exists, if not create it with headers
+try:
+    with open('times.csv', 'x') as csvfile:
+        csvwriter = csv.writer(csvfile)
+except FileExistsError:
+    pass
 with open('times.csv', 'r') as csvfile:
     reader = csv.reader(csvfile, delimiter=',') 
     for row in reader:
@@ -274,10 +278,10 @@ def timer_words(times, currtime, color, scramble, virtual_solving):
     # calculate ao12
     if len(valid_times) >= 12:
         sorted_times = sorted(valid_times[:12])
-        ao12 = sum(sorted_times[1:11]) / 3
-        if 12 > 60000:
-            min = int(ao5 / 60000)
-            sec = ((ao5 - min * 60000) / 1000)
+        ao12 = sum(sorted_times[1:11]) / 10
+        if ao12 > 60000:
+            min = int(ao12 / 60000)
+            sec = ((ao12 - min * 60000) / 1000)
             GAME_FONT.render_to(screen, (coordconverter(57), coordconverter(650)), f"AO12: {(min)}:{(sec):0.3f}", BLACK, size=coordconverter(30), style=pygame.freetype.STYLE_NORMAL, rotation=0)
         else:
             GAME_FONT.render_to(screen, (coordconverter(57), coordconverter(650)), f"AO12: {(ao12/1000):.3f}", BLACK, size=coordconverter(30), style=pygame.freetype.STYLE_NORMAL, rotation=0)
@@ -531,6 +535,7 @@ while not done:
                             invalidnum = True
         # timer actions
         elif currevent == 3:
+            print(len(prevsolves))
             # keybinds
             if keys[pygame.K_MINUS]:
                 if pygame.time.get_ticks() - lastpress > menudas:
