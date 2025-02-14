@@ -11,6 +11,7 @@ keymapimg = pygame.image.load("keymap.png")
 # sets alpha to 128 
 keymapimg.set_alpha(128)
 # Set the width and height of the screen
+print("Program by Yeeto38. Thanks for using!")
 uout = input("Enter the length of the screen in px. Press enter to set to default (1400): ")
 try:
     leng = int(uout)
