@@ -3,6 +3,4 @@ Rubik's Cube project
 
 Keybinds are pretty self expalanatory, (-) key to show keybinds for practice.
 
-pygame, random, math, numpy, and csv libraries are needed to run this program.
-
-Will try to make it an exe file soon~
+The Alg calculator function is kinda just there for fun, tried to make it off of Jperm's Your Algorithm Sucks (proof) video
