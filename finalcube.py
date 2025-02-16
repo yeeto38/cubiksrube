@@ -41,10 +41,11 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 ORANGE = (255, 165, 0)
-def gamefont():
-    return pygame.freetype.SysFont("ヒラキノ角コシックw9", coordconverter(48, pygame.display.Info().current_w))
+def gamefont(size):
+    return pygame.font.Font(resource_path("Ubuntu-B.ttf"), int(size))
+    # return pygame.freetype.SysFont("ヒラキノ角コシックw9", coordconverter(48, pygame.display.Info().current_w))
 def algfont():
-    return pygame.freetype.SysFont("ヒラキノ角コシックw9", coordconverter(20, pygame.display.Info().current_w))
+    return pygame.font.Font(resource_path("UbuntuMono-R.ttf"), int(coordconverter(20, pygame.display.Info().current_w)))
 
 # Draw the Rubik's cube state using the cube variable
 def drawcube(screen, cube):
@@ -147,123 +148,134 @@ def drawkeymap(screen, size, keymapimg):
     return
 # Draw the menu
 def drawmenu(screen, hover):
-    gamefont().render_to(screen, (coordconverter(500, pygame.display.Info().current_w), coordconverter(200, pygame.display.Info().current_w)), "MENU", BLACK, size=coordconverter(60, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    for i in range(len((menu_options()))):
-        if i == hover:
-            gamefont().render_to(screen, (coordconverter(500, pygame.display.Info().current_w), coordconverter(300, pygame.display.Info().current_w) + (i * coordconverter(40, pygame.display.Info().current_w))), menu_options()[i], RED, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-        else: 
-            gamefont().render_to(screen, (coordconverter(500, pygame.display.Info().current_w), coordconverter(300, pygame.display.Info().current_w) + (i * coordconverter(40, pygame.display.Info().current_w))), menu_options()[i], BLACK, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-        
+    screen.blit(gamefont(coordconverter(60, pygame.display.Info().current_w)).render("MENU", True, BLACK), (coordconverter(600, pygame.display.Info().current_w), coordconverter(250, pygame.display.Info().current_w)))
+    for i in range(len(menu_options())):
+        color = RED if i == hover else BLACK
+        screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render(menu_options()[i], True, color), (coordconverter(600, pygame.display.Info().current_w), coordconverter(350, pygame.display.Info().current_w) + (i * coordconverter(40, pygame.display.Info().current_w))))
+
 # Write the permanent text
 def permtext(screen):
-    gamefont().render_to(screen, (coordconverter(20, pygame.display.Info().current_w), coordconverter(20, pygame.display.Info().current_w)), "Rubik's Cube", BLACK, size=coordconverter(48, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(20, pygame.display.Info().current_w), coordconverter(72, pygame.display.Info().current_w)), "Utility", BLACK, size=coordconverter(48, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(20, pygame.display.Info().current_w), coordconverter(140, pygame.display.Info().current_w)), "menu (=)", BLACK, size=coordconverter(26, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+    screen.blit(gamefont(coordconverter(48, pygame.display.Info().current_w)).render("Rubik's Cube", True, BLACK), (coordconverter(20, pygame.display.Info().current_w), coordconverter(20, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(48, pygame.display.Info().current_w)).render("Utility", True, BLACK), (coordconverter(20, pygame.display.Info().current_w), coordconverter(72, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(26, pygame.display.Info().current_w)).render("menu (=)", True, BLACK), (coordconverter(20, pygame.display.Info().current_w), coordconverter(140, pygame.display.Info().current_w)))
 
 # Practice stuff
 def practice_words(screen):
-    gamefont().render_to(screen, (coordconverter(1150, pygame.display.Info().current_w), coordconverter(30, pygame.display.Info().current_w)), "(esc) to reset cube", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-# timer stuff
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render("(esc) to reset cube", True, BLACK), (coordconverter(1150, pygame.display.Info().current_w), coordconverter(30, pygame.display.Info().current_w)))
+
+# Timer stuff
 def timer_words(screen, times, currtime, color, scramble, virtual_solving):
     # splits scramble into 2 lines
     first_ten_moves = scramble[:9]
     last_ten_moves = scramble[9:]
     first_ten_moves = " ".join(first_ten_moves)
     last_ten_moves = " ".join(last_ten_moves)
-    gamefont().render_to(screen, (coordconverter(1150, pygame.display.Info().current_w), coordconverter(30, pygame.display.Info().current_w)), "(esc) to reset timer", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render("(esc) to reset timer", True, BLACK), (coordconverter(1150, pygame.display.Info().current_w), coordconverter(30, pygame.display.Info().current_w)))
     # display the last 5 times
-    for i in range(len(times)):
+    for i in range(5):
         time_text = f"{i+1}     {(times[i]/1000):.3f}" if times[i] != 0 else f"{i+1}     ---"
-        gamefont().render_to(screen, (coordconverter(160, pygame.display.Info().current_w), coordconverter(700, pygame.display.Info().current_w)+(coordconverter(40, pygame.display.Info().current_w)*i)), time_text, BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+        screen.blit(gamefont(coordconverter(25, pygame.display.Info().current_w)).render(time_text, True, BLACK), (coordconverter(120, pygame.display.Info().current_w), coordconverter(670, pygame.display.Info().current_w)+(coordconverter(40, pygame.display.Info().current_w)*i)))
     valid_times = [time for time in times if time != 0]
     # calculate ao5
+    ao5x=85
+    ao5y=570
     if len(valid_times) >= 5:
         sorted_times = sorted(valid_times[:5])
         ao5 = sum(sorted_times[1:4]) / 3
         if ao5 > 60000:
             min = int(ao5 / 60000)
             sec = ((ao5 - min * 60000) / 1000)
-            gamefont().render_to(screen, (coordconverter(80, pygame.display.Info().current_w), coordconverter(600, pygame.display.Info().current_w)), f"AO5: {(min)}:{(sec):0.3f}", BLACK, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+            screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render(f"AO5: {(min)}:{(sec):0.3f}", True, BLACK), (coordconverter(ao5x, pygame.display.Info().current_w), coordconverter(ao5y, pygame.display.Info().current_w)))
         else:
-            gamefont().render_to(screen, (coordconverter(80, pygame.display.Info().current_w), coordconverter(600, pygame.display.Info().current_w)), f"AO5: {(ao5/1000):.3f}", BLACK, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+            screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render(f"AO5: {(ao5/1000):.3f}", True, BLACK), (coordconverter(ao5x, pygame.display.Info().current_w), coordconverter(ao5y, pygame.display.Info().current_w)))
     else:
-        gamefont().render_to(screen, (coordconverter(80, pygame.display.Info().current_w), coordconverter(600, pygame.display.Info().current_w)), "AO5: ---", BLACK, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+        screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render("AO5: ---", True, BLACK), (coordconverter(ao5x, pygame.display.Info().current_w), coordconverter(ao5y, pygame.display.Info().current_w)))
     # calculate ao12
+    ao12x=ao5x-18
+    ao12y=ao5y+50
     if len(valid_times) >= 12:
         sorted_times = sorted(valid_times[:12])
         ao12 = sum(sorted_times[1:11]) / 10
         if ao12 > 60000:
             min = int(ao12 / 60000)
             sec = ((ao12 - min * 60000) / 1000)
-            gamefont().render_to(screen, (coordconverter(57, pygame.display.Info().current_w), coordconverter(650, pygame.display.Info().current_w)), f"AO12: {(min)}:{(sec):0.3f}", BLACK, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+            screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render(f"AO12: {(min)}:{(sec):0.3f}", True, BLACK), (coordconverter(ao12x, pygame.display.Info().current_w), coordconverter(ao12y, pygame.display.Info().current_w)))
         else:
-            gamefont().render_to(screen, (coordconverter(57, pygame.display.Info().current_w), coordconverter(650, pygame.display.Info().current_w)), f"AO12: {(ao12/1000):.3f}", BLACK, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+            screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render(f"AO12: {(ao12/1000):0.3f}", True, BLACK), (coordconverter(ao12x, pygame.display.Info().current_w), coordconverter(ao12y, pygame.display.Info().current_w)))
     else:
-        gamefont().render_to(screen, (coordconverter(57, pygame.display.Info().current_w), coordconverter(650, pygame.display.Info().current_w)), "AO12: ---", BLACK, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+        screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render("AO12: ---", True, BLACK), (coordconverter(ao12x, pygame.display.Info().current_w), coordconverter(ao12y, pygame.display.Info().current_w)))
     if currtime > 60000:
         min = int(currtime / 60000)
         sec = ((currtime - min * 60000) / 1000)
-        gamefont().render_to(screen, (coordconverter(900, pygame.display.Info().current_w), coordconverter(500, pygame.display.Info().current_w)), f"{(min)}:{(sec):0.3f}", color, size=coordconverter(60, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+        screen.blit(gamefont(coordconverter(60, pygame.display.Info().current_w)).render(f"{(min)}:{(sec):0.3f}", True, color), (coordconverter(900, pygame.display.Info().current_w), coordconverter(500, pygame.display.Info().current_w)))
     else:
-        gamefont().render_to(screen, (coordconverter(900, pygame.display.Info().current_w), coordconverter(500, pygame.display.Info().current_w)), f"{(currtime/1000):0.3f}", color, size=coordconverter(60, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(850, pygame.display.Info().current_w), coordconverter(400, pygame.display.Info().current_w)), first_ten_moves, BLACK, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(800, pygame.display.Info().current_w), coordconverter(450, pygame.display.Info().current_w)), last_ten_moves, BLACK, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+        screen.blit(gamefont(coordconverter(60, pygame.display.Info().current_w)).render(f"{(currtime/1000):0.3f}", True, color), (coordconverter(900, pygame.display.Info().current_w), coordconverter(500, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render(first_ten_moves, True, BLACK), (coordconverter(850, pygame.display.Info().current_w), coordconverter(400, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render(last_ten_moves, True, BLACK), (coordconverter(800, pygame.display.Info().current_w), coordconverter(450, pygame.display.Info().current_w)))
     if virtual_solving:
-        gamefont().render_to(screen, (coordconverter(800, pygame.display.Info().current_w), coordconverter(800, pygame.display.Info().current_w)), "Virtual solving (\\ to toggle)", GREEN, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+        screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render("Virtual solving (\\ to toggle)", True, GREEN), (coordconverter(800, pygame.display.Info().current_w), coordconverter(800, pygame.display.Info().current_w)))
     else:
-        gamefont().render_to(screen, (coordconverter(800, pygame.display.Info().current_w), coordconverter(800, pygame.display.Info().current_w)), "Virtual solving (\\ to toggle)", RED, size=coordconverter(30, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+        screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render("Virtual solving (\\ to toggle)", True, RED), (coordconverter(800, pygame.display.Info().current_w), coordconverter(800, pygame.display.Info().current_w)))
 
 # alg calculator stuff
 def algcalc_words(screen, analysis):
-    gamefont().render_to(screen, (coordconverter(500, pygame.display.Info().current_w), coordconverter(30, pygame.display.Info().current_w)), "(esc) to exit algorithm calculator", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(850, pygame.display.Info().current_w), coordconverter(400, pygame.display.Info().current_w)), "Input custom alg.", BLACK, size=coordconverter(40, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(800, pygame.display.Info().current_w), coordconverter(450, pygame.display.Info().current_w)), "(enter) to submit", BLACK, size=coordconverter(40, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(750, pygame.display.Info().current_w), coordconverter(500, pygame.display.Info().current_w)), "Prime (') denoted by 'p'", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(750, pygame.display.Info().current_w), coordconverter(525, pygame.display.Info().current_w)), "Moves must be separated by space", BLACK, size=coordconverter(15, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(1150, pygame.display.Info().current_w), coordconverter(30, pygame.display.Info().current_w)), "(\\) to reset cube", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(814, pygame.display.Info().current_w), coordconverter(610, pygame.display.Info().current_w)), f"SHTM: {analysis[0]}", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(700, pygame.display.Info().current_w), coordconverter(660, pygame.display.Info().current_w)), f"Cube rotations: {analysis[1]}", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(798, pygame.display.Info().current_w), coordconverter(710, pygame.display.Info().current_w)), f"Double: {analysis[2]}", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(825, pygame.display.Info().current_w), coordconverter(760, pygame.display.Info().current_w)), f"Slice: {analysis[3]}", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
-    gamefont().render_to(screen, (coordconverter(805, pygame.display.Info().current_w), coordconverter(810, pygame.display.Info().current_w)), f"Simult: {analysis[4]}", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render("(esc) to exit algorithm calculator", True, BLACK), (coordconverter(500, pygame.display.Info().current_w), coordconverter(30, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(40, pygame.display.Info().current_w)).render("Input custom alg.", True, BLACK), (coordconverter(850, pygame.display.Info().current_w), coordconverter(400, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(40, pygame.display.Info().current_w)).render("(enter) to submit", True, BLACK), (coordconverter(800, pygame.display.Info().current_w), coordconverter(450, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render("Prime (') denoted by 'p'", True, BLACK), (coordconverter(750, pygame.display.Info().current_w), coordconverter(500, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(15, pygame.display.Info().current_w)).render("Moves must be separated by space", True, BLACK), (coordconverter(750, pygame.display.Info().current_w), coordconverter(525, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render("(\\) to reset cube", True, BLACK), (coordconverter(1200, pygame.display.Info().current_w), coordconverter(30, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render(f"SHTM: {analysis[0]}", True, BLACK), (coordconverter(814, pygame.display.Info().current_w), coordconverter(610, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render(f"Cube rotations: {analysis[1]}", True, BLACK), (coordconverter(725, pygame.display.Info().current_w), coordconverter(660, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render(f"Double: {analysis[2]}", True, BLACK), (coordconverter(798, pygame.display.Info().current_w), coordconverter(710, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render(f"Slice: {analysis[3]}", True, BLACK), (coordconverter(825, pygame.display.Info().current_w), coordconverter(760, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render(f"Simult: {analysis[4]}", True, BLACK), (coordconverter(805, pygame.display.Info().current_w), coordconverter(810, pygame.display.Info().current_w)))
     if analysis[5] == 0:
         string = "-"
     else:
         string = str(round(float(analysis[0]) / float(analysis[5]) * 100, 2))
-    gamefont().render_to(screen, (coordconverter(1000, pygame.display.Info().current_w), coordconverter(660, pygame.display.Info().current_w)), f"Efficiency: {string}%", BLACK, size=coordconverter(20, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render(f"Efficiency: {string}%", True, BLACK), (coordconverter(1000, pygame.display.Info().current_w), coordconverter(660, pygame.display.Info().current_w)))
 
 # Keybinds Words Renderer
 def keybinds_words(screen):
     # Render the keybinds text on the screen.
-    gamefont().render_to(screen, (coordconverter(20, pygame.display.Info().current_w), coordconverter(190, pygame.display.Info().current_w)), "keybinds (-)", BLACK, size=coordconverter(26, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+    screen.blit(gamefont(coordconverter(26, pygame.display.Info().current_w)).render("keybinds (-)", True, BLACK), (coordconverter(20, pygame.display.Info().current_w), coordconverter(190, pygame.display.Info().current_w)))
 
 # Draw DAS Box for Input
 def drawdasbox(screen, invalidnum, userdas): 
     input_rectnum = pygame.Rect(coordconverter(500, pygame.display.Info().current_w), coordconverter(500, pygame.display.Info().current_w), coordconverter(140, pygame.display.Info().current_w), coordconverter(50, pygame.display.Info().current_w))
     # Display prompt for DAS input
-    gamefont().render_to(screen, (coordconverter(100, pygame.display.Info().current_w), coordconverter(400, pygame.display.Info().current_w)), "Input DAS in ms. (enter) to submit", BLACK, size=coordconverter(60, pygame.display.Info().current_w), style=pygame.freetype.STYLE_NORMAL, rotation=0)
+    screen.blit(gamefont(coordconverter(60, pygame.display.Info().current_w)).render("Input DAS in ms. (enter) to submit", True, BLACK), (coordconverter(230, pygame.display.Info().current_w), coordconverter(400, pygame.display.Info().current_w)))
     # Draw the input box
     pygame.draw.rect(screen, pygame.Color('lightskyblue3'), input_rectnum)
     # Render the user-entered DAS value
-    gamefont().render_to(screen, (input_rectnum.x+coordconverter(5, pygame.display.Info().current_w), input_rectnum.y+coordconverter(5, pygame.display.Info().current_w)), userdas, pygame.Color('black'))
+    screen.blit(gamefont(coordconverter(40, pygame.display.Info().current_w)).render(userdas, True, pygame.Color('black')), (input_rectnum.x+coordconverter(5, pygame.display.Info().current_w), input_rectnum.y+coordconverter(3, pygame.display.Info().current_w)))
     # Adjust the input box width dynamically based on text
-    input_rectnum.w = max(100, gamefont().get_rect(userdas).width + coordconverter(10, pygame.display.Info().current_w))
+    input_rectnum.w = max(100, gamefont(coordconverter(20, pygame.display.Info().current_w)).size(userdas)[0] + coordconverter(10, pygame.display.Info().current_w))
     # Display error message if the input is invalid
     if invalidnum:
-        gamefont().render_to(screen, (input_rectnum.x+5, input_rectnum.y+input_rectnum.height+5), "Invalid number", RED, size=coordconverter(20, pygame.display.Info().current_w))
+        screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render("Invalid number", True, RED), (input_rectnum.x + coordconverter(5, pygame.display.Info().current_w), input_rectnum.y + input_rectnum.height + coordconverter(5, pygame.display.Info().current_w)))
 
 # Draw Algorithm Input Box
 def algbox(screen, invalidnotation, useralg):
     input_rectalg = pygame.Rect(coordconverter(700, pygame.display.Info().current_w), coordconverter(550, pygame.display.Info().current_w), coordconverter(140, pygame.display.Info().current_w), coordconverter(25, pygame.display.Info().current_w))
     # Draw the algorithm input box
+    # Adjust the input box width dynamically
+    input_rectalg.w = max(coordconverter(50, pygame.display.Info().current_w), gamefont(coordconverter(20, pygame.display.Info().current_w)).size(useralg)[0]+coordconverter(20, pygame.display.Info().current_w))
     pygame.draw.rect(screen, pygame.Color('lightskyblue3'), input_rectalg)
     # Render the user-entered algorithm
-    algfont().render_to(screen, (input_rectalg.x+coordconverter(5, pygame.display.Info().current_w), input_rectalg.y+coordconverter(5, pygame.display.Info().current_w)), useralg, BLACK, size=coordconverter(20, pygame.display.Info().current_w))
-    # Adjust the input box width dynamically
-    input_rectalg.w = max(coordconverter(50, pygame.display.Info().current_w), algfont().get_rect(useralg).width+coordconverter(20, pygame.display.Info().current_w))
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render(useralg, True, BLACK), (input_rectalg.x+coordconverter(5, pygame.display.Info().current_w), input_rectalg.y+coordconverter(3, pygame.display.Info().current_w)))
     # Display error message if the algorithm notation is invalid
     if invalidnotation:
-        algfont().render_to(screen, (input_rectalg.x+coordconverter(5, pygame.display.Info().current_w), input_rectalg.y+input_rectalg.height+5), "Invalid input", RED, size=coordconverter(20, pygame.display.Info().current_w))
+        screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render("Invalid input", True, RED), (input_rectalg.x + coordconverter(5, pygame.display.Info().current_w), input_rectalg.y + input_rectalg.height + 5))
+    # Draw the algorithm input box
+    # Adjust the input box width dynamically
+    input_rectalg.w = max(coordconverter(50, pygame.display.Info().current_w), algfont().size(useralg)[0]+coordconverter(20, pygame.display.Info().current_w))
+    pygame.draw.rect(screen, pygame.Color('lightskyblue3'), input_rectalg)
+    # Render the user-entered algorithm
+    screen.blit(pygame.font.Font(resource_path("UbuntuMono-R.ttf"), int(coordconverter(20, pygame.display.Info().current_w))).render(useralg, True, BLACK, None), (input_rectalg.x+coordconverter(5, pygame.display.Info().current_w), input_rectalg.y+coordconverter(3, pygame.display.Info().current_w)))
+    print(input_rectalg.w)
+    # Display error message if the algorithm notation is invalid
 
 def solved(cube):
     # Iterate through all cube faces to check if each face is a solid color
@@ -311,8 +323,8 @@ def coordconverter(num, screen0):
 
 def csvwriter(time, scramble):
     with open ('times.csv', 'a+') as csvfile:
-        csvwriter = csv.writer(csvfile)
-        csvwriter.writerow([time, scramble])
+        csvwriting = csv.writer(csvfile)
+        csvwriting.writerow([time, scramble])
 
 def genscramble():
     smoves = ["R", "U", "F", "L", "D", "B", "R'", "U'", "F'", "L'", "D'", "B'", "R2", "U2", "F2", "L2", "D2", "B2"]
@@ -406,7 +418,7 @@ def main():
     # Check if times.csv exists, if not create it with headers
     try:
         with open('times.csv', 'x') as csvfile:
-            csvwriter = csv.writer(csvfile)
+            csv.writer(csvfile)
     except FileExistsError:
         pass
     with open('times.csv', 'r') as csvfile:
