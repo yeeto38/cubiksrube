@@ -274,7 +274,6 @@ def algbox(screen, invalidnotation, useralg):
     pygame.draw.rect(screen, pygame.Color('lightskyblue3'), input_rectalg)
     # Render the user-entered algorithm
     screen.blit(pygame.font.Font(resource_path("UbuntuMono-R.ttf"), int(coordconverter(20, pygame.display.Info().current_w))).render(useralg, True, BLACK, None), (input_rectalg.x+coordconverter(5, pygame.display.Info().current_w), input_rectalg.y+coordconverter(3, pygame.display.Info().current_w)))
-    print(input_rectalg.w)
     # Display error message if the algorithm notation is invalid
 
 def solved(cube):
