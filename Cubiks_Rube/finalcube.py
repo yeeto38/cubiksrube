@@ -42,10 +42,10 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 ORANGE = (255, 165, 0)
 def gamefont(size):
-    return pygame.font.Font(resource_path("Ubuntu-B.ttf"), int(size))
+    return pygame.font.Font(resource_path("Cubiks_Rube/Ubuntu-B.ttf"), int(size))
     # return pygame.freetype.SysFont("ヒラキノ角コシックw9", coordconverter(48, pygame.display.Info().current_w))
 def algfont():
-    return pygame.font.Font(resource_path("UbuntuMono-R.ttf"), int(coordconverter(20, pygame.display.Info().current_w)))
+    return pygame.font.Font(resource_path("Cubiks_Rube/UbuntuMono-R.ttf"), int(coordconverter(20, pygame.display.Info().current_w)))
 
 # Draw the Rubik's cube state using the cube variable
 def drawcube(screen, cube):
@@ -273,7 +273,7 @@ def algbox(screen, invalidnotation, useralg):
     input_rectalg.w = max(coordconverter(50, pygame.display.Info().current_w), algfont().size(useralg)[0]+coordconverter(20, pygame.display.Info().current_w))
     pygame.draw.rect(screen, pygame.Color('lightskyblue3'), input_rectalg)
     # Render the user-entered algorithm
-    screen.blit(pygame.font.Font(resource_path("UbuntuMono-R.ttf"), int(coordconverter(20, pygame.display.Info().current_w))).render(useralg, True, BLACK, None), (input_rectalg.x+coordconverter(5, pygame.display.Info().current_w), input_rectalg.y+coordconverter(3, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(20), pygame.display.Info().current_w).render(useralg, True, BLACK, None), (input_rectalg.x+coordconverter(5, pygame.display.Info().current_w), input_rectalg.y+coordconverter(3, pygame.display.Info().current_w)))
     # Display error message if the algorithm notation is invalid
 
 def solved(cube):
@@ -436,7 +436,7 @@ def main():
     # Initialize pygame
     pygame.init()
 
-    keymapimg = pygame.image.load(resource_path("keymap.png"))
+    keymapimg = pygame.image.load(resource_path("Cubiks_Rube/keymap.png"))
     # sets alpha to 128
     keymapimg.set_alpha(128)
 
