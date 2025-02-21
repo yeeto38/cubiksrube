@@ -7,9 +7,7 @@ import random
 import math
 import numpy as np
 import csv
-from rotations import (
-    rotateSP, rotateE, rotatef, rotateb, rotateM, rotatebp, rotatefp, rotateEP, rotateS, rotateZP, rotateB, rotateLP, rotatelp, rotateX, rotater, rotateR, rotateBP, rotateZ, rotateYP, rotateD, rotateL, rotateUP, rotateFP, rotateF, rotateU, rotateRP, rotateDP, rotateY, rotated, rotateMP, rotateup, rotatel, rotateXP, rotaterp, rotateu, rotatedp, rotateF2, rotateR2, rotateD2, rotateL2, rotateU2, rotateB2, rotateM2, rotateE2, rotateS2, rotateX2, rotateY2, rotateZ2, rotatef2, rotateb2, rotateu2, rotated2, rotater2, rotatel2
-)
+from rotations import *
 
 leng = 1200
 
@@ -21,7 +19,7 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-def defstate() :
+def defstate():
     cube = np.zeros((6, 3, 3), dtype=object)
     for i in range(6):
         for j in range(3):

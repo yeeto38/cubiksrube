@@ -15,9 +15,9 @@ a = Analysis(['finalcube.py'],
              win_private_assemblies=False,
              cipher=block_cipher)
 
-a.datas += [('UbuntuMono-R.ttf','/Users/jasonhuang/Documents/ENGR133/Student/Cubiks Rube/UbuntuMono-R.ttf', "DATA")]
-a.datas += [('Ubuntu-B.ttf','/Users/jasonhuang/Documents/ENGR133/Student/Cubiks Rube/Ubuntu-B.ttf', "DATA")]
-a.datas += [('keymap.png','/Users/jasonhuang/Documents/ENGR133/Student/Cubiks Rube/keymap.png', "DATA")]
+a.datas += [('UbuntuMono-R.ttf','/Users/jasonhuang/Documents/ENGR133/Student/Cubiks Rube/Cubiks_Rube/UbuntuMono-R.ttf', "DATA")]
+a.datas += [('Ubuntu-B.ttf','/Users/jasonhuang/Documents/ENGR133/Student/Cubiks Rube/Cubiks_Rube/Ubuntu-B.ttf', "DATA")]
+a.datas += [('keymap.png','/Users/jasonhuang/Documents/ENGR133/Student/Cubiks Rube/Cubiks_Rube/keymap.png', "DATA")]
 
 pyz = PYZ(a.pure, a.zipped_data,
          cipher=block_cipher)
