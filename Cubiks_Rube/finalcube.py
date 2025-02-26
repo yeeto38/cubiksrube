@@ -9,8 +9,6 @@ import numpy as np
 import csv
 from rotations import *
 
-leng = 1200
-
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
@@ -271,7 +269,7 @@ def algbox(screen, invalidnotation, useralg):
     input_rectalg.w = max(coordconverter(50, pygame.display.Info().current_w), algfont().size(useralg)[0]+coordconverter(20, pygame.display.Info().current_w))
     pygame.draw.rect(screen, pygame.Color('lightskyblue3'), input_rectalg)
     # Render the user-entered algorithm
-    screen.blit(gamefont(coordconverter(20), pygame.display.Info().current_w).render(useralg, True, BLACK, None), (input_rectalg.x+coordconverter(5, pygame.display.Info().current_w), input_rectalg.y+coordconverter(3, pygame.display.Info().current_w)))
+    screen.blit(gamefont(coordconverter(20, pygame.display.Info().current_w)).render(useralg, True, BLACK, None), (input_rectalg.x+coordconverter(5, pygame.display.Info().current_w), input_rectalg.y+coordconverter(3, pygame.display.Info().current_w)))
     # Display error message if the algorithm notation is invalid
 
 def solved(cube):
@@ -315,8 +313,8 @@ def scramb(scramble):
         move_to_action(move)(cube)
     return cube
 
-def coordconverter(num, screen0):
-    return num / 1400 * screen0
+def coordconverter(num, screenw):
+    return num / 1400 * screenw
 
 def csvwriter(time, scramble):
     with open ('times.csv', 'a+') as csvfile:
@@ -339,7 +337,7 @@ def genscramble():
     return out
 
 def open_popup():
-    """Opens a pop-up window to prompt the user to enter an integer number."""
+    # Create a pop-up window to get the screen size from the user
     result = [None]  # Use a list to store the result
 
     def submit_number():
@@ -369,16 +367,15 @@ def open_popup():
 # -------- Main Program Loop -----------
 
 def main():
-
     lastpress = 0
     # amount of ms before key can be pressed again. can be customized
-    das = 120
+    das = 100
     # das for the menu. cannot be customized outside of code
     menudas = 150
     #0 = menu
     #1 = virtual cube (nothing more)
     #2 = changing das
-    #3 = timer (with scramble) 
+    #3 = timer (with scramble)
     #   have option to include analytics, such as tps, average, etc.
     #4 = count alg time (display overloading?)
     currevent = 0
@@ -413,13 +410,11 @@ def main():
     clock = pygame.time.Clock()
 
     # Check if times.csv exists, if not create it with headers
-    try:
-        with open('times.csv', 'x') as csvfile:
+    if not os.path.exists('times.csv'):
+        with open('times.csv', 'w') as csvfile:
             csv.writer(csvfile)
-    except FileExistsError:
-        pass
     with open('times.csv', 'r') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',') 
+        reader = csv.reader(csvfile, delimiter=',')
         for row in reader:
             prevsolves = np.roll(prevsolves, 1)
             prevsolves[0] = float(row[0])
@@ -700,8 +695,8 @@ def main():
         # --- Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
 
-        # --- Limit to 1 frames per second
-        # clock.tick(60)
+        # --- Limit to 60 frames per second
+        clock.tick(60)
 
     # Close the window and quit.
     pygame.quit()
