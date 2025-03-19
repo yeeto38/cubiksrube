@@ -4,3 +4,5 @@ times.csv
 .DS_Store
 classexample.py
 Cubiks_Rube/test.py
+dist
+cubiksrube.spec
