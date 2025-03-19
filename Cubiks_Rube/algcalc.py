@@ -1,5 +1,5 @@
-from universal import *
 from variables import *
+from universal import *
 
 # alg calculator stuff
 def algcalc_words(screen, analysis):

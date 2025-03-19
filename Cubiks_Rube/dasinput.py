@@ -1,5 +1,5 @@
-from universal import *
 from variables import *
+from universal import *
 
 # Draw DAS Box for Input
 def drawdasbox(screen, invalidnum, userdas): 
