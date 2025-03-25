@@ -3,7 +3,7 @@ import tkinter as tk
 import pygame
 import numpy as np
 import csv
-from cubetimer import *
+from cubetimer import * 
 from dasinput import *
 from algcalc import *
 from practice import *
