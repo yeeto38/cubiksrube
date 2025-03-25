@@ -1,21 +1,13 @@
-import os
 import tkinter as tk
 import pygame
 import numpy as np
-import csv
 from cubetimer import * 
 from dasinput import *
 from algcalc import *
 from practice import *
 from universal import *
 from menu import *
-
-# -------- Functions -----------
-
-def csvwriter(time, scramble):
-    with open ('times.csv', 'a+') as csvfile:
-        csvwriting = csv.writer(csvfile)
-        csvwriting.writerow([time, scramble])
+from csvstuff import *
 
 # -------- Main Program Loop -----------
 
@@ -50,7 +42,6 @@ def main():
     screen_width, screen_height = get_screen_size(root)
     size = (int(0.8 *screen_width), int(0.8*screen_height))
     # The size of the new screen from tkinter
-    newscreen = size[0]
 
     drawkeys = False
     invalidnum = False
@@ -62,7 +53,7 @@ def main():
     acceptable_inputs = [pygame.K_r, pygame.K_u, pygame.K_f, pygame.K_l, pygame.K_d, pygame.K_b, pygame.K_x, pygame.K_y, pygame.K_z, pygame.K_m, pygame.K_e, pygame.K_s, pygame.K_SPACE, pygame.KSCAN_APOSTROPHE, pygame.K_RSHIFT, pygame.K_LSHIFT, pygame.K_p, pygame.K_BACKSLASH, pygame.K_ESCAPE, pygame.K_2]
 
     #timer variables
-    prevsolves = np.zeros(12, dtype=float)
+    prevsolves = file_exists()
     spaceholdstart = 0
     timer_start = 0
     timing = False
@@ -75,16 +66,6 @@ def main():
     # Use to manage how fast the screen updates
     clock = pygame.time.Clock()
 
-    # Check if times.csv exists, if not create it with headers
-    if not os.path.exists('times.csv'):
-        with open('times.csv', 'w') as csvfile:
-            csv.writer(csvfile)
-    with open('times.csv', 'r') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',')
-        for row in reader:
-            prevsolves = np.roll(prevsolves, 1)
-            prevsolves[0] = float(row[0])
-
     # Set the width and height of the screen [width, height]
     # leng = open_popup()
 
@@ -95,7 +76,7 @@ def main():
     # Initialize pygame
     pygame.init()
 
-    keymapimg = pygame.image.load(resource_path("Cubiks_Rube/keymap.png"))
+    keymapimg = pygame.image.load(resource_path("Cubiks_Rube/data/keymap.png"))
     # sets alpha to 128
     keymapimg.set_alpha(128)
 

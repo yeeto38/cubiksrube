@@ -1,7 +1,6 @@
 import pathlib
 
 def main():
-    dir_text = ""
     text_array = [
         "# -*- mode: python ; coding: utf-8 -*-",
         "",
@@ -18,10 +17,12 @@ def main():
         "    noarchive=False,",
         "    optimize=0,",
         ")",
-        "",
-        "a.datas += [('Cubiks_Rube/UbuntuMono-R.ttf', 'Cubiks_Rube/UbuntuMono-R.ttf', \"DATA\")]",
-        "a.datas += [('Cubiks_Rube/Ubuntu-B.ttf', 'Cubiks_Rube/Ubuntu-B.ttf', \"DATA\")]",
-        "a.datas += [('Cubiks_Rube/keymap.png', 'Cubiks_Rube/keymap.png', \"DATA\")]",
+        ""]
+    data_dir = pathlib.Path('Cubiks_Rube/data')
+    for file in data_dir.iterdir():
+        if file.is_file():
+            text_array.append(f"a.datas += [('{file}', '{file}', \"DATA\")]")
+    text_array += [
         "",
         "pyz = PYZ(a.pure)",
         "",

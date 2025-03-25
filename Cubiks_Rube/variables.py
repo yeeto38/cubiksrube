@@ -27,10 +27,10 @@ def colors():
     return [YELLOW, RED, GREEN, ORANGE, WHITE, BLUE]
 
 def gamefont(size):
-    return pygame.font.Font(resource_path("Cubiks_Rube/Ubuntu-B.ttf"), int(size))
+    return pygame.font.Font(resource_path("Cubiks_Rube/data/Ubuntu-B.ttf"), int(size))
 
 def algfont():
-    return pygame.font.Font(resource_path("Cubiks_Rube/UbuntuMono-R.ttf"), int(coordconverter(20, pygame.display.Info().current_w)))
+    return pygame.font.Font(resource_path("Cubiks_Rube/data/UbuntuMono-R.ttf"), int(coordconverter(20, pygame.display.Info().current_w)))
 
 def menu_options():
     return ["(p)ractice", "(c)hange das", "(t)imer", "(a)lg calculator", "(q)uit program"]

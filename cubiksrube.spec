@@ -14,9 +14,9 @@ a = Analysis(
     optimize=0,
 )
 
-a.datas += [('Cubiks_Rube/UbuntuMono-R.ttf', 'Cubiks_Rube/UbuntuMono-R.ttf', "DATA")]
-a.datas += [('Cubiks_Rube/Ubuntu-B.ttf', 'Cubiks_Rube/Ubuntu-B.ttf', "DATA")]
-a.datas += [('Cubiks_Rube/keymap.png', 'Cubiks_Rube/keymap.png', "DATA")]
+a.datas += [('Cubiks_Rube/data/keymap.png', 'Cubiks_Rube/data/keymap.png', "DATA")]
+a.datas += [('Cubiks_Rube/data/Ubuntu-B.ttf', 'Cubiks_Rube/data/Ubuntu-B.ttf', "DATA")]
+a.datas += [('Cubiks_Rube/data/UbuntuMono-R.ttf', 'Cubiks_Rube/data/UbuntuMono-R.ttf', "DATA")]
 
 pyz = PYZ(a.pure)
 
