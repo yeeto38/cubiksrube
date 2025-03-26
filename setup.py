@@ -8,12 +8,14 @@ setup(
     install_requires=[
         'pygame',
         'numpy',
-        'tkinter',
-        'random',
-        'os',
-        'csv',
-        'math',
-        'sys'
+        # Standard library dependencies
+        # 'tk',
+        # 'random',
+        # 'os',
+        # 'csv',
+        # 'math',
+        # 'sys', 
+        'pyinstaller'
         # Add any other dependencies your program needs
     ],
     entry_points={

@@ -6,9 +6,11 @@ Keybinds are pretty self expalanatory, (-) key to show keybinds for practice.
 The Alg calculator function is kinda just there for fun, tried to make it off of Jperm's Your Algorithm Sucks (proof) video
 
 To run:
-- Make sure you have pyinstaller (python3 -m pip install pyinstaller)
-- Go to your terminal and change your directory to the place where the file is (cd)
-- run pyinstaller cubiksrube.spec
-- you will need these libraries: os, sys, tkinter, pygame, random, math, numpy, csv
-- After running pyinstaller, it should make a dist folder which has an exe inside
-- Doubleclick the exe and the program will run
+- You can just run finalcube.py and it should work just fine
+- You can also run it as an exe 
+    - In your terminal, cd to the directory you downloaded the folder to (ie. cd Downloads/Cubiks_Rube) 
+    - type pip install . (you might have to do something like python3 -m pip install . or python -m pip install .)
+    - type pyinstaller cubiksrube.spec
+        - This may take a while and there will be a bunch of numbers and letters going on your terminal. This is fine.
+    - Go to finder/file explorer and in ./Cubiks_Rube/dist there should be an executable file
+    - Double click to run. A terminal will open and you just have to wait a bit for the program to open
