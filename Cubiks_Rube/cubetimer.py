@@ -11,11 +11,21 @@ def genscramble():
     for _ in range(20):
         # Make sure the next move is not the same as the previous
         curr = random.randint(0, len(smoves)-1)
-        while curr % 6 == prev % 6:
-            curr = random.randint(0, len(smoves) - 1)
+        if len(out) <= 1:
+            while len(out) > 0 and curr % 6 == prev % 6:
+                curr = random.randint(0, len(smoves) - 1)
+        else:
+            while (len(out) > 0 and curr % 6 == prev % 6) or same_move(out[-2], out[-1]):
+                curr = random.randint(0, len(smoves) - 1)
         out.append(smoves[curr])
         prev = curr % 6
     return out
+
+def same_move(move1, move2):
+    x = ["R", "L"]
+    y = ["U", "D"]
+    z = ["F", "B"]
+    return move1 in x and move2 in x or move1 in y and move2 in y or move1 in z and move2 in z
 
 def scramb(scramble):
     moves = splitmoves(" ".join(scramble))
