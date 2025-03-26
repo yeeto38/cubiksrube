@@ -29,15 +29,11 @@ def main():
     hover = 0
     # the keymap and moveset for the cube
     moves = np.array(["S'", "E", "f", "b", "M", "M", "b'", "f'", "E'", "S", "z'", "B", "L'", "l'", "x", "x", "r", "R", "B'", "z", "y'", "D", "L", "U'", "F'", "F", "U", "R'", "D'", "y", "d", "M'", "u'", "l", "x'", "x'", "r'", "u", "M'", "d'"])
+    # individual cooldowns for each move
     times = np.zeros(len(moves))
     # Use tkinter to get the screen length and width
     root = tk.Tk()
     root.withdraw()  # Hide the root window
-
-    def get_screen_size(root):
-        screen_width = root.winfo_screenwidth()
-        screen_height = root.winfo_screenheight()
-        return screen_width, screen_height
 
     screen_width, screen_height = get_screen_size(root)
     size = (int(0.8 *screen_width), int(0.8*screen_height))

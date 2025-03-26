@@ -15,6 +15,11 @@ def resource_path(relative_path):
 def coordconverter(num, screenw):
     return num / 1400 * screenw
 
+def get_screen_size(root):
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        return screen_width, screen_height
+
 # Splits a string of moves into a list of moves that can be used by virtual cube program
 def splitmoves(move_string):
     moves = move_string.split(" ")
