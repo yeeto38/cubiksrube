@@ -13,19 +13,21 @@ def genscramble():
         curr = random.randint(0, len(smoves)-1)
         if len(out) <= 1:
             while len(out) > 0 and curr % 6 == prev % 6:
-                curr = random.randint(0, len(smoves) - 1)
+                curr = (curr + 1) % len(smoves)
         else:
-            while (len(out) > 0 and curr % 6 == prev % 6) or same_move(out[-2], out[-1]):
-                curr = random.randint(0, len(smoves) - 1)
+            while (len(out) > 0 and curr % 6 == prev % 6) or same_move(out[-2], out[-1], smoves[curr]):
+                curr = (curr + 1) % len(smoves)
         out.append(smoves[curr])
         prev = curr % 6
     return out
 
-def same_move(move1, move2):
-    x = ["R", "L"]
-    y = ["U", "D"]
-    z = ["F", "B"]
-    return move1 in x and move2 in x or move1 in y and move2 in y or move1 in z and move2 in z
+def same_move(move1, move2, move3):
+    x = ["R", "R'", "R2", "L", "L'", "L2"]
+    y = ["U", "U'", "U2", "D", "D'", "D2"]
+    z = ["F", "F'", "F2", "B", "B'", "B2"]
+    return ((move1 in x and move2 in x and move3 in x) or
+            (move1 in y and move2 in y and move3 in y) or
+            (move1 in z and move2 in z and move3 in z))
 
 def scramb(scramble):
     moves = splitmoves(" ".join(scramble))
@@ -96,3 +98,5 @@ def timer_words(screen, times, currtime, color, scramble, virtual_solving):
         screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render("Virtual solving (\\ to toggle)", True, GREEN), (coordconverter(800, pygame.display.Info().current_w), coordconverter(800, pygame.display.Info().current_w)))
     else:
         screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render("Virtual solving (\\ to toggle)", True, RED), (coordconverter(800, pygame.display.Info().current_w), coordconverter(800, pygame.display.Info().current_w)))
+
+print(genscramble())

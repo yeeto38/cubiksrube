@@ -12,6 +12,7 @@ from csvstuff import *
 # -------- Main Program Loop -----------
 
 def main():
+    it = 0
     lastpress = 0
     # amount of ms before key can be pressed again. can be customized
     das = 100
