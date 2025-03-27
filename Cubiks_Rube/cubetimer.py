@@ -98,5 +98,3 @@ def timer_words(screen, times, currtime, color, scramble, virtual_solving):
         screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render("Virtual solving (\\ to toggle)", True, GREEN), (coordconverter(800, pygame.display.Info().current_w), coordconverter(800, pygame.display.Info().current_w)))
     else:
         screen.blit(gamefont(coordconverter(30, pygame.display.Info().current_w)).render("Virtual solving (\\ to toggle)", True, RED), (coordconverter(800, pygame.display.Info().current_w), coordconverter(800, pygame.display.Info().current_w)))
-
-print(genscramble())
