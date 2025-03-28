@@ -10,6 +10,9 @@ When it says pip install, it might be python3 -m pip or python -m pip. It depend
 To run:
 - If you don't have python installed already, do that (https://www.python.org)
 - In your terminal, cd to the directory you downloaded the this file to (ie. cd Downloads/cubiksrube) 
+    - type vim ~/.bash_profile
+        - press 'o' and then type 'alias python='python3.13'
+        - press 'esc' then press ':wq'
     - type 'pip install .'
     - You can now just run finalcube.py and it should work just fine
     - You can also run it as an exe 
